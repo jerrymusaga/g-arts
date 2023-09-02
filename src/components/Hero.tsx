@@ -4,6 +4,7 @@ import * as React from 'react';
 // @ts-ignore
 import Indenticon from 'react-identicons'
 import Image from 'next/image'
+import {setGlobalState} from "../store"
 
 
 const Hero = () => {
@@ -18,7 +19,7 @@ const Hero = () => {
                 <p className='text-gray-500 font-semibold text-sm mt-3'>Mint & React on amazing NFTs only on G-Arts</p>
             </div>
             <div className='flex mt-5 justify-between'>
-                <button className='shadow-xl shadow-black text-white bg-[#28043d] hover:bg-[#19012c] rounded-full p-2'  >Mint NFT</button>
+                <button onClick={() =>setGlobalState('modal', 'scale-100')} className='shadow-xl shadow-black text-white bg-[#28043d] hover:bg-[#19012c] rounded-full p-2'  >Mint NFT</button>
             </div>
             <div>
                 <div className='w-3/4 flex justify-between items-center mt-5'>

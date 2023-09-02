@@ -1,6 +1,7 @@
 import Nav from '@/components/Nav'
 import Hero from '@/components/Hero'
 import ArtWorks from '@/components/Artworks'
+import MintNFT from '@/components/MintNFT'
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <Hero />
     </div>
     <ArtWorks />
+    <MintNFT />
     
 
  </div>
