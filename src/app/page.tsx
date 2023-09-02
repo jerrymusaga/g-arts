@@ -1,5 +1,6 @@
 import Nav from '@/components/Nav'
 import Hero from '@/components/Hero'
+import ArtWorks from '@/components/Artworks'
 
 export default function Home() {
   return (
@@ -8,7 +9,7 @@ export default function Home() {
       <Nav />
       <Hero />
     </div>
-    
+    <ArtWorks />
     
 
  </div>
