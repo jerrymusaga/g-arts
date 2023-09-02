@@ -13,7 +13,7 @@ const Nav = () => {
             <li className='mx-4 cursor-pointer'>Market</li>
             <li className='mx-4 cursor-pointer'>MetaVerse</li>
             <li className='mx-4 cursor-pointer'>Profile</li>
-            <button  className='shadow-xl shadow-black text-white bg-[#e32970] hover:bg-[#bd255f] md:text-xl p-2 rounded-full' >Connect Wallet</button> 
+            <button  className='shadow-xl shadow-black text-white  hover:bg-[#bd255f] md:text-xl p-2 rounded-full' >Connect Wallet</button> 
         </ul>
         
     </div>
