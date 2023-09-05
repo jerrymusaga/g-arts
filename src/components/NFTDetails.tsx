@@ -19,7 +19,8 @@ const NFTDetails = () => {
     }
 
     const onChangePrice = () => {
-        setGlobalState('NFTDetailsModal', 'scale-0')
+        setGlobalState('NFTDetailsModal', 'scale-100')
+        setGlobalState('updatePriceModal', 'scale-100')
         
     }
 

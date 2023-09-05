@@ -5,6 +5,7 @@ import ArtWorks from '@/components/Artworks'
 import MintNFT from '@/components/MintNFT'
 import NFTDetails from '@/components/NFTDetails'
 import ReactionsModal from '@/components/ReactionsModal'
+import UpdatePrice from '@/components/UpdatePrice'
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
     <MintNFT />
     <NFTDetails />
     <ReactionsModal />
+    <UpdatePrice />
  </div>
   )
 }
