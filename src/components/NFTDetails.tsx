@@ -25,7 +25,7 @@ const NFTDetails = () => {
 
   return (
     <div className={`fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-50 transform transition-transform duration-300 ${NFTDetails}`}>
-        <div className='bg-[#151c25] shadow-xl shadow-[#e32970] rounded-xl w-11/12 md:w-2/5 h-7/12 p-6'>
+        <div className='bg-[#151c25] shadow-xl shadow-[#2a1538] rounded-xl w-11/12 md:w-2/5 h-7/12 p-6'>
             <div className='flex flex-col'>
                 <div className='flex justify-between items-center text-gray-400'>
                     <p className='font-semibold '>Buy & or React on NFT</p>
@@ -57,9 +57,9 @@ const NFTDetails = () => {
                 </div>
                 
                 <div className='flex justify-between items-center space-x-2'>
-                    <button className='flex justify-center items-center w-full shadow-lg shadow-black text-white mt-5 font-bold bg-[#e32970] hover:bg-[#bd255f] rounded-full p-2'>Buy NFT</button>
-                    <button onClick={onChangePrice} className='flex justify-center items-center w-full shadow-lg shadow-black text-white mt-5 font-bold bg-[#e32970] hover:bg-[#bd255f] rounded-full p-2'>Update NFT Price</button>
-                    <button className='flex justify-center items-center w-50 shadow-lg shadow-black text-white mt-5 font-bold bg-[#e32970] hover:bg-[#bd255f] rounded-full p-2'><MdOutlineAddReaction /></button>
+                    <button className='flex justify-center items-center w-full shadow-lg shadow-black text-white mt-5 font-bold bg-[#28043d] hover:bg-[#19012c] rounded-full p-2'>Buy NFT</button>
+                    <button onClick={onChangePrice} className='flex justify-center items-center w-full shadow-lg shadow-black text-white mt-5 font-bold bg-[#28043d] hover:bg-[#19012c] rounded-full p-2'>Update NFT Price</button>
+                    <button onClick={()=>setGlobalState('reactionModal', 'scale-100')} className='flex justify-center items-center w-50 shadow-lg shadow-black text-white mt-5 font-bold bg-[#28043d] hover:bg-[#19012c]] rounded-full p-2'><MdOutlineAddReaction /></button>
                 </div>
             </div>
         </div>
