@@ -8,14 +8,16 @@ async function main(){
 
     let marketplaceContract: Marketplace;
 
+    
+
+
     const marketplaceContractFactory = await ethers.getContractFactory("Marketplace");
-    marketplaceContract = await marketplaceContractFactory.deploy("G-Arts", "GAT", 5, account[1].address);
+    marketplaceContract = await marketplaceContractFactory.deploy("G-Arts", "GAT", 5, account[0].address);
 
-   // console.log(marketplaceContract.deploymentTransaction());
+    console.log(marketplaceContract.deploymentTransaction());
 
-    console.log(`The Marketplace was deployed at address ${await marketplaceContract.getAddress()}`)
+    console.log(`The Marketplace was deployed at address ${await marketplaceContract.getAddress()} by this wallet address ${account[0].address}`)
 
-    console.log(`Balance ${await marketplaceContract.balanceOf(account[1])} ether`)
 }
 
 main().catch((error) => {

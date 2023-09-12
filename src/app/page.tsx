@@ -6,14 +6,16 @@ import MintNFT from '@/components/MintNFT'
 import NFTDetails from '@/components/NFTDetails'
 import ReactionsModal from '@/components/ReactionsModal'
 import UpdatePrice from '@/components/UpdatePrice'
+import Alert from '@/components/Alert'
 
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { Web3Modal } from '@web3modal/react'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
-import { gnosisChiado, gnosis } from 'wagmi/chains'
+import { gnosisChiado, gnosis, localhost } from 'wagmi/chains'
+import Loading from '@/components/Loading'
 
 
-const chains = [gnosisChiado, gnosis]
+const chains = [gnosisChiado, gnosis, localhost]
 const projectId = "eedf16a14abf9be796f6ee521c2c4191"
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })])
@@ -38,6 +40,8 @@ export default function Home() {
         <NFTDetails />
         <ReactionsModal />
         <UpdatePrice />
+        <Alert />
+        <Loading />
       </WagmiConfig>
       <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
   </div>

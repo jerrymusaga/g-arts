@@ -16,7 +16,7 @@ const Hero = () => {
                     Trade & React On <br /> Digital Arts powered by <br />
                     <span className='text-gradient'>Gnosis</span> Protocol
                 </h1>
-                <p className='text-gray-500 font-semibold text-sm mt-3'>Mint & React on amazing NFTs only on G-Arts</p>
+                <p className='text-gray-500 font-semibold text-sm mt-3'>Mint & Earn through Reactions on amazing NFTs only on G-Arts</p>
             </div>
             <div className='flex mt-5 justify-between'>
                 <button onClick={() =>setGlobalState('modal', 'scale-100')} className='shadow-xl shadow-black text-white bg-[#28043d] hover:bg-[#19012c] rounded-full p-2'  >Mint NFT</button>

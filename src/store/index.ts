@@ -9,6 +9,9 @@ const {setGlobalState, getGlobalState, useGlobalState} = createGlobalState({
     updatePriceModal: 'scale-0',
     loading: {show: false, msg: ''},
     alert: {show:false, msg:'', color:''},
+    nfts: [],
+    nft: null,
+    
 });
 
 const setAlert = (msg: string,color='green') => {
@@ -16,7 +19,7 @@ const setAlert = (msg: string,color='green') => {
     setGlobalState('alert', {show:true, msg, color})
     setTimeout(() => {
         setGlobalState('alert',{show:false, msg, color})
-    }, 2000)
+    }, 9000)
 }
 
 const setLoadingMsg = (msg: string) => {

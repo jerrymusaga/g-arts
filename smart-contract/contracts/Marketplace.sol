@@ -148,4 +148,22 @@ contract Marketplace is ERC721Enumerable, Ownable {
     function getAllTransactions() external view returns (TransactionStruct[] memory) {
         return transactions;
     }
+
+    function rewardNFTLikeButton(uint256 id) external payable{
+        require(msg.value >= 0.2 ether, "XDAI too low to reward owner of NFT!");
+        require(msg.sender != minted[id - 1].owner, "NFT Owner cannot reward own NFT!");
+        payTo(minted[id - 1].owner, 0.2 ether);
+    }
+
+    function rewardNFTLoveButton(uint256 id) external payable{
+        require(msg.value >= 0.5 ether, "XDAI too low to reward owner of NFT!");
+        require(msg.sender != minted[id - 1].owner, "NFT Owner cannot reward own NFT!");
+        payTo(minted[id - 1].owner, 0.5 ether);
+    }
+
+    function rewardNFTFireButton(uint256 id) external payable{
+        require(msg.value >= 1 ether, "XDAI too low to reward owner of NFT!");
+        require(msg.sender != minted[id - 1].owner, "NFT Owner cannot reward own NFT!");
+        payTo(minted[id - 1].owner, 1 ether);
+    }
 }
