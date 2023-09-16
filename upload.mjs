@@ -1,4 +1,4 @@
-import { NFTStorage, File } from "nft.storage"
+import { NFTStorage, File,  } from "nft.storage"
 import fs from 'fs'
 import dotenv from 'dotenv'
 dotenv.config()

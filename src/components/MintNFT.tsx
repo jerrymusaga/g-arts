@@ -6,9 +6,11 @@ import Image from 'next/image'
 import { Web3Modal } from "@web3modal/react";
 import { setGlobalState, useGlobalState, setLoadingMsg,setAlert, } from "@/store";
 import MarketplaceABI from '../../smart-contract/artifacts/contracts/Marketplace.sol/Marketplace.json';
-import { parseEther } from "viem";
+import { parseEther} from "viem";
 import { useAccount } from "wagmi";
 import { usePrepareContractWrite, useContractWrite, useWaitForTransaction, } from "wagmi";
+import { NFTStorage, File } from "nft.storage"
+import fs from 'fs'
 
 
 const MintNFT = () => {
@@ -22,16 +24,35 @@ const MintNFT = () => {
 
     const {isConnected, address} = useAccount()
 
-    const metadataURI = "ipfs://bafyreifnepkdknnpisftxjxu5kfwayqz6p5rlvo57htjvvbntygsooantu/metadata.json"
+    // https://ipfs.io/ipfs/bafyreifnepkdknnpisftxjxu5kfwayqz6p5rlvo57htjvvbntygsooantu/metadata.json
 
-    // const handleSubmit =  (e) => {
-    //     e.preventDefault()
-    //     if(!title || !description || !price) return;
+    // "ipfs://bafyreifnepkdknnpisftxjxu5kfwayqz6p5rlvo57htjvvbntygsooantu/metadata.json"
 
-    //     setGlobalState('loading', { show: true, msg: 'Uploading NFT Metadata to NFT.Storage...' })
+    const metadataURI = "https://ipfs.io/ipfs/bafyreifnepkdknnpisftxjxu5kfwayqz6p5rlvo57htjvvbntygsooantu/metadata.json"
+    const API_KEY = process.env.NFT_STORAGE_API_KEY 
 
-    //     cancelModal()
-    // }
+    async function storeAsset() {
+        const client = new NFTStorage({ token: API_KEY })
+        try{
+            const metadata = await client.store({
+                name: title,
+                description: description,
+                image: new File(
+                    [await fs.promises.readFile(fileUrl)],
+                    fileUrl,
+                    { type: 'image/png' }
+                ),
+            })
+            console.log("Metadata stored on Filecoin and IPFS with URL:", metadata.url)
+            setGlobalState('loading', { show: true, msg: 'Uploading NFT Metadata to NFT.Storage...' })
+            return metadata;
+            
+        }catch(error){
+            setAlert("Unable to store NFT", "red");
+        }
+        
+        
+     }
 
     const resetForm = () => {
         setTitle('')
@@ -58,10 +79,11 @@ const MintNFT = () => {
           setFileUrl(e.target.files[0])
         }
     }
-    
+   
+    // 0x90e5e02A496141F0611301204e76066A7aE6783e
 
     const {write: mint} = useContractWrite({
-        address: "0x90e5e02A496141F0611301204e76066A7aE6783e",
+        address: "0xAd79d762909f03fa7D4ae01530180263C33FCDD8",
         abi: MarketplaceABI.abi,
         functionName: "payToMint",
         args:[title, description, metadataURI, parseEther(price)],
@@ -69,7 +91,7 @@ const MintNFT = () => {
         value: parseEther("0.001"),
         onSuccess(data){
             setAlert('Minting completed...', 'green')
-            
+            setFileUrl(metadataURI)
         },
         onError(error){
             setAlert(`Minting Failed ${error.message}`, 'red')
@@ -86,10 +108,8 @@ const MintNFT = () => {
             <form 
                 onSubmit={(e) => {
                     e.preventDefault()
-                    
-                    setGlobalState('loading', { show: true, msg: 'Uploading NFT Metadata to NFT.Storage...' })
                     setLoadingMsg('Intializing transaction...')
-                    setFileUrl(metadataURI)
+                    // setFileUrl(metadataURI)
                     mint?.()
                     cancelModal()
 

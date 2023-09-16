@@ -9,7 +9,7 @@ const {setGlobalState, getGlobalState, useGlobalState} = createGlobalState({
     updatePriceModal: 'scale-0',
     loading: {show: false, msg: ''},
     alert: {show:false, msg:'', color:''},
-    nfts: [],
+    nfts: [].toString(),
     nft: null,
     
 });
