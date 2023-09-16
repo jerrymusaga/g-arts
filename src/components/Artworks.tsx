@@ -44,8 +44,10 @@ const ArtWorks = () => {
             <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gaps-4 lg:gaps-3 py-2.5'>
                 {
                     data?.map((nft,i) => (
+                        <>
+                            <Card key={i} nft={nft} />
+                        </>
                         
-                        <Card key={i} nft={nft} />
                     ))
                 }
                 
