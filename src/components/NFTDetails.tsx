@@ -7,11 +7,15 @@ import {MdOutlineAddReaction} from 'react-icons/md'
 // @ts-ignore
 import Indenticon from 'react-identicons'
 import Image from 'next/image'
+import { formatEther } from 'viem';
+import { useAccount } from 'wagmi';
 
 
 const NFTDetails = () => {
 
     const [NFTDetails] = useGlobalState('NFTDetailsModal')
+    const [nft] = useGlobalState('nft');
+    const {address} = useAccount()
 
     const cancelModal = () => {
         setGlobalState('NFTDetailsModal', 'scale-0')
@@ -21,6 +25,7 @@ const NFTDetails = () => {
     const onChangePrice = () => {
         setGlobalState('NFTDetailsModal', 'scale-100')
         setGlobalState('updatePriceModal', 'scale-100')
+        setGlobalState('nft', nft)
         
     }
 
@@ -36,32 +41,38 @@ const NFTDetails = () => {
                 </div>
                 <div className='flex justify-center items-center rounded-xl mt-5'>
                     <div className='shrink-0 rounded-xl overflow-hidden h-40 w-40'>
-                        <Image className='h-full w-full object-cover cursor-pointer' width={1000} height={1000} src='/artwork_1.png' alt='nft-image'/>
+                        <Image className='h-full w-full object-cover cursor-pointer' width={1000} height={1000} src={nft?.metadataURI} alt={nft?.title}/>
                     </div>
                 </div>
                 <div className='flex flex-col justify-start rounded-xl mt-5'>
-                    <h4 className='text-white font-semibold '>Title</h4>
-                    <p className='text-gray-400 text-xs my-1'>Officia proident amet mollit duis nisi ut exercitation cupidatat aliqua proident ullamco laborum id occaecat. Reprehenderit esse aliqua nulla Lorem pariatur. Duis nostrud ut reprehenderit quis ipsum Lorem magna labore deserunt nulla culpa pariatur labore. Duis pariatur irure commodo sunt irure adipisicing ex ea dolore.</p>
+                    <h4 className='text-white font-semibold '>{nft?.title}</h4>
+                    <p className='text-gray-400 text-xs my-1'>{nft?.description}</p>
                     <div className='flex justify-between items-center mt-3 text-white'>
                         <div className='flex justify-start items-center'>
-                            <Indenticon className='h-10 w-10 object-contain rounded-full mr-3' size={50} />
+                            <Indenticon className='h-10 w-10 object-contain rounded-full mr-3' size={50} string={nft?.owner} />
                             <div className='flex flex-col justify-center items-start'>
-                                <small className='text-white font-bold'>@owner</small>
+                                <small className='text-white font-bold'>{nft?.owner}</small>
                                 <small className='text-pink-800 font-semibold'>jerry.eth</small>
                             </div>
                         </div>
                         <div className='flex flex-col text-white'>
                             <small className='text-xs'>Current Price</small>
-                            <p className='text-sm font-bold'>2.5 XDAI</p>
+                            <p className='text-sm font-bold'>{formatEther(nft?.cost)} XDAI</p>
                         </div>
                     </div>
                 </div>
+                {
+                    address == nft?.owner ? (
+                        <button onClick={onChangePrice} className='flex justify-center items-center w-full shadow-lg shadow-black text-white mt-5 font-bold bg-[#28043d] hover:bg-[#19012c] rounded-full p-2'>Update NFT Price</button>
+                    ) : (
+                        <div className='flex justify-between items-center space-x-2'>
+                        <button className='flex justify-center items-center w-full shadow-lg shadow-black text-white mt-5 font-bold bg-[#28043d] hover:bg-[#19012c] rounded-full p-2'>Buy NFT</button>
+                        <button onClick={()=>setGlobalState('reactionModal', 'scale-100')} className='flex justify-center items-center w-50 shadow-lg shadow-black text-white mt-5 font-bold bg-[#28043d] hover:bg-[#19012c]] rounded-full p-2'><MdOutlineAddReaction /></button>
+                    </div>
+                    )
+                }
                 
-                <div className='flex justify-between items-center space-x-2'>
-                    <button className='flex justify-center items-center w-full shadow-lg shadow-black text-white mt-5 font-bold bg-[#28043d] hover:bg-[#19012c] rounded-full p-2'>Buy NFT</button>
-                    <button onClick={onChangePrice} className='flex justify-center items-center w-full shadow-lg shadow-black text-white mt-5 font-bold bg-[#28043d] hover:bg-[#19012c] rounded-full p-2'>Update NFT Price</button>
-                    <button onClick={()=>setGlobalState('reactionModal', 'scale-100')} className='flex justify-center items-center w-50 shadow-lg shadow-black text-white mt-5 font-bold bg-[#28043d] hover:bg-[#19012c]] rounded-full p-2'><MdOutlineAddReaction /></button>
-                </div>
+               
             </div>
         </div>
     </div>

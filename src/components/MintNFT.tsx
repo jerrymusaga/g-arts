@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import {FaTimes} from 'react-icons/fa'
 import Image from 'next/image'
-import { Web3Modal } from "@web3modal/react";
 import { setGlobalState, useGlobalState, setLoadingMsg,setAlert, } from "@/store";
 import MarketplaceABI from '../../smart-contract/artifacts/contracts/Marketplace.sol/Marketplace.json';
 import { parseEther} from "viem";
@@ -12,6 +11,8 @@ import { usePrepareContractWrite, useContractWrite, useWaitForTransaction, } fro
 import { useRouter } from 'next/router';
 import { NFTStorage, File } from "nft.storage"
 import fs from 'fs'
+import mime from 'mime'
+import path from 'path'
 
 
 const MintNFT = () => {
@@ -35,25 +36,49 @@ const MintNFT = () => {
     async function storeAsset() {
         const client = new NFTStorage({ token: API_KEY })
         try{
+            const type = mime.getType(fileUrl)
             const metadata = await client.store({
                 name: title,
                 description: description,
                 image: new File(
                     [await fs.promises.readFile(fileUrl)],
                     fileUrl,
-                    { type: 'image/png' }
+                    {type}
                 ),
             })
+            
             console.log("Metadata stored on Filecoin and IPFS with URL:", metadata.url)
+            console.log(metadata.data)
+            console.log(metadata.data.image)
+            setFileUrl(metadata.url)
             setGlobalState('loading', { show: true, msg: 'Uploading NFT Metadata to NFT.Storage...' })
             return metadata;
             
         }catch(error){
             setAlert("Unable to store NFT", "red");
-        }
-        
-        
+        }  
      }
+
+    // async function storeNFT(imagePath:any) {
+    //     // load the file from disk
+    //     const image = await fileFromPath(imagePath)
+    
+    //     // create a new NFTStorage client using our API key
+    //     const nftstorage = new NFTStorage({ token: API_KEY })
+    
+    //     // call client.store, passing in the image & metadata
+    //     return nftstorage.store({
+    //         image,
+    //         name: title,
+    //         description: description
+    //     })
+    // }
+
+    // async function fileFromPath(filePath:any) {
+    //     const content = await fs.promises.readFile(filePath)
+    //     const type = mime.getType(filePath)
+    //     return new File([content], path.basename(filePath), { type })
+    // }
 
     const resetForm = () => {
         setTitle('')
@@ -81,10 +106,28 @@ const MintNFT = () => {
         }
     }
    
-    // 0x90e5e02A496141F0611301204e76066A7aE6783e
+    // const client = new NFTStorage({ token: API_KEY })
+    
+    //     const type = mime.getType(fileUrl)
+    //     const metadata = await client.store({
+    //         name: title,
+    //         description: description,
+    //         image: new File(
+    //             [await fs.promises.readFile(fileUrl)],
+    //             fileUrl,
+    //             {type}
+    //         ),
+    //     })
+        
+    //     console.log("Metadata stored on Filecoin and IPFS with URL:", metadata.url)
+    //     console.log("metadata data " + metadata.data)
+    //     console.log("metadata image " + metadata.data.image)
+    //     console.log("metadata url " + metadata.url)
+    //     setFileUrl(metadata.url)
+    //     setGlobalState('loading', { show: true, msg: 'Uploading NFT Metadata to NFT.Storage...' })
 
     const {write: mint} = useContractWrite({
-        address: "0xAd79d762909f03fa7D4ae01530180263C33FCDD8",
+        address: "0x309D48Fc35e3361D8A980e6BD9e481Fd131bC90A",
         abi: MarketplaceABI.abi,
         functionName: "payToMint",
         args:[title, description, metadataURI, parseEther(price)],
@@ -92,8 +135,8 @@ const MintNFT = () => {
         value: parseEther("0.001"),
         onSuccess(data){
             setAlert('Minting completed...', 'green')
-            setFileUrl(metadataURI)
             const router = useRouter();
+            console.log(metadata)
             router.reload();
         },
         onError(error){
@@ -145,6 +188,7 @@ const MintNFT = () => {
                     <textarea className='block w-full text-sm text-slate-500 focus:outline-none cursor-pointer focus:ring-0 bg-transparent border-0 h-20 resize-none' name='description' placeholder='Description of NFT' value={description} onChange={(e) => setDescription(e.target.value)} required></textarea>
                 </div>
                 <button 
+                    // onClick={storeAsset}
                     disabled={!mint || !title || !description || !price} 
                     className='flex justify-center items-center w-full shadow-lg shadow-black text-white mt-5 font-bold bg-[#28043d] hover:bg-[#19012c] rounded-full p-2'>
                     Mint NFT

@@ -6,7 +6,7 @@ const nextConfig = {
     return config;
   },
     images: {
-        domains: ['ipfs.io',"localhost"],
+        domains: ['ipfs.io',"localhost", ""],
     },
 }
 
