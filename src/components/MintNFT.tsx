@@ -9,6 +9,7 @@ import MarketplaceABI from '../../smart-contract/artifacts/contracts/Marketplace
 import { parseEther} from "viem";
 import { useAccount } from "wagmi";
 import { usePrepareContractWrite, useContractWrite, useWaitForTransaction, } from "wagmi";
+import { useRouter } from 'next/router';
 import { NFTStorage, File } from "nft.storage"
 import fs from 'fs'
 
@@ -92,6 +93,8 @@ const MintNFT = () => {
         onSuccess(data){
             setAlert('Minting completed...', 'green')
             setFileUrl(metadataURI)
+            const router = useRouter();
+            router.reload();
         },
         onError(error){
             setAlert(`Minting Failed ${error.message}`, 'red')

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Image from 'next/image'
 import MarketplaceABI from "../../smart-contract/artifacts/contracts/Marketplace.sol/Marketplace.json"
-import { setGlobalState } from '@/store';
+import { setGlobalState} from '@/store';
 import { useContractRead } from 'wagmi'
 import { formatEther } from 'viem';
 
@@ -11,27 +11,16 @@ import { formatEther } from 'viem';
 
 
 const ArtWorks = () => {
+   
+    
 
-    const arrangedNfts = (nfts) => {
-        return nfts
-          .map((nft) => ({
-            id: Number(nft.id),
-            owner: nft.owner.toLowerCase(),
-            cost: parseEther(nft.cost).toString(),
-            title: nft.title,
-            description: nft.description,
-            metadataURI: nft.metadataURI,
-            timestamp: nft.timestamp,
-          }))
-          .reverse()
-      }
-
-    const {data} = useContractRead({
+    const {data, isSuccess} = useContractRead({
         address: "0xAd79d762909f03fa7D4ae01530180263C33FCDD8",
         abi: MarketplaceABI.abi,
         functionName: "getAllNFTs",
         onSuccess(data:any){
             console.log(data)
+            
         }
     })
 
@@ -45,7 +34,7 @@ const ArtWorks = () => {
                 {
                     data?.map((nft,i) => (
                         <>
-                            <Card key={i} nft={nft} />
+                            <Card key={Number(nft.id)} nft={nft} />
                         </>
                         
                     ))
@@ -67,7 +56,7 @@ const ArtWorks = () => {
 const Card = ({nft}) => (
     <div className='w-full shadow-xl shadow-black rounded-md overflow-hidden bg-gray-800 my-2 p-3'>
         <Image className='h-60 w-full object-cover shadow-black  shadow-lg rounded-lg mb-3' src={`https://ipfs.io/ipfs/${nft.metadataURI}`} width={1000} height={1000} alt={nft.title} />
-        <h4 className='text-white font-semibold'>{nft.title}</h4>
+        <h4 className='text-white font-semibold'>{nft.title} #{Number(nft.id)}</h4>
         <p className='text-gray-400 text-sm my-1'>{nft.description}</p>
         <div className='flex justify-between items-center mt-3 text-white'>
             <div className='flex flex-col'>
