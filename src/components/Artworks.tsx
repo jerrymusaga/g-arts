@@ -6,6 +6,7 @@ import MarketplaceABI from "../../smart-contract/artifacts/contracts/Marketplace
 import { setGlobalState} from '@/store';
 import { useContractRead } from 'wagmi'
 import { formatEther } from 'viem';
+import { toGatewayURL } from 'nft.storage';
 
 
 
@@ -15,7 +16,7 @@ const ArtWorks = () => {
     
 
     const {data, isSuccess} = useContractRead({
-        address: "0x309D48Fc35e3361D8A980e6BD9e481Fd131bC90A",
+        address: "0x10fc9639e5052092Ae224b1a2867b0259D22DF45",
         abi: MarketplaceABI.abi,
         functionName: "getAllNFTs",
         onSuccess(data:any){
@@ -64,7 +65,7 @@ const Card = ({nft}) => {
     }
     return (
     <div className='w-full shadow-xl shadow-black rounded-md overflow-hidden bg-gray-800 my-2 p-3'>
-        <Image className='h-60 w-full object-cover shadow-black  shadow-lg rounded-lg mb-3' src={`${nft.metadataURI}`} width={1000} height={1000} alt={nft.title} />
+        <Image className='h-60 w-full object-cover shadow-black  shadow-lg rounded-lg mb-3' src={`/artwork_1.png`} width={1000} height={1000} alt={nft.title} />
         <h4 className='text-white font-semibold'>{nft.title} #{Number(nft.id)}</h4>
         <p className='text-gray-400 text-sm my-1'>{nft.description}</p>
         <div className='flex justify-between items-center mt-3 text-white'>

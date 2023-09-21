@@ -1,27 +1,39 @@
-import { NFTStorage, File,  } from "nft.storage"
+import { NFTStorage, File } from 'nft.storage'
+
+import mime from 'mime'
+
 import fs from 'fs'
+
+import path from 'path'
+
 import dotenv from 'dotenv'
 dotenv.config()
 
-const API_KEY = process.env.NFT_STORAGE_API_KEY 
+const NFT_STORAGE_KEY = process.env.NEXT_PUBLIC_NFT_STORAGE_API_KEY
 
-async function storeAsset() {
-   const client = new NFTStorage({ token: API_KEY })
-   const metadata = await client.store({
-       name: 'G-Arts NFT',
-       description: 'Collection of G-Arts NFTs',
-       image: new File(
-           [await fs.promises.readFile('artwork_1.png')],
-           'artwork_1.png',
-           { type: 'image/png' }
-       ),
-   })
-   console.log("Metadata stored on Filecoin and IPFS with URL:", metadata.url)
+async function storeNFT(imagePath, name, description) {
+    const image = await fileFromPath(imagePath)
+
+    const nftstorage = new NFTStorage({ token: NFT_STORAGE_KEY })
+
+    return nftstorage.store({
+        image,
+        name,
+        description,
+    })
 }
 
-storeAsset()
-   .then(() => process.exit(0))
-   .catch((error) => {
-       console.error(error);
-       process.exit(1);
-   });
+async function fileFromPath(filePath) {
+    const content = await fs?.promises?.readFile(filePath)
+    const type = mime.getType(filePath)
+    console.log(filePath.name)
+    return new File([content], path.basename(filePath.name), { type })
+}
+
+async function upload(imagePath, name, description) {
+    const result = await storeNFT(imagePath, name, description)
+    console.log(result)
+    return result
+}
+
+export { upload }

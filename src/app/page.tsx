@@ -8,13 +8,12 @@ import ReactionsModal from '@/components/ReactionsModal'
 import UpdatePrice from '@/components/UpdatePrice'
 import Alert from '@/components/Alert'
 
-import { useEffect } from 'react'
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { Web3Modal } from '@web3modal/react'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { gnosisChiado, gnosis} from 'wagmi/chains'
 import Loading from '@/components/Loading'
-
+import Footer from '@/components/Footer'
 
 
 
@@ -48,6 +47,7 @@ export default function Home() {
         <UpdatePrice />
         <Alert />
         <Loading />
+        <Footer />
         
       </WagmiConfig>
       <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />

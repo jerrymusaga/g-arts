@@ -8,7 +8,10 @@ import {MdOutlineAddReaction} from 'react-icons/md'
 import Indenticon from 'react-identicons'
 import Image from 'next/image'
 import { formatEther } from 'viem';
-import { useAccount } from 'wagmi';
+import { useAccount, useContractWrite } from 'wagmi';
+import MarketplaceABI from '../../smart-contract/artifacts/contracts/Marketplace.sol/Marketplace.json'
+import { parseEther } from 'viem';
+import { setAlert } from '../store';
 
 
 const NFTDetails = () => {
@@ -16,7 +19,7 @@ const NFTDetails = () => {
     const [NFTDetails] = useGlobalState('NFTDetailsModal')
     const [nft] = useGlobalState('nft');
     const {address} = useAccount()
-
+    console.log(nft?.cost)
     const cancelModal = () => {
         setGlobalState('NFTDetailsModal', 'scale-0')
         
@@ -28,6 +31,26 @@ const NFTDetails = () => {
         setGlobalState('nft', nft)
         
     }
+
+    const {write: buyNFT} = useContractWrite({
+        address: "0x10fc9639e5052092Ae224b1a2867b0259D22DF45",
+        abi: MarketplaceABI.abi,
+        functionName: "payToBuy",
+        args:[Number(nft?.id)],
+        account: address,
+        value: nft?.cost,
+        onSuccess(data){
+            setAlert('Nft Bought...', 'green')
+            cancelModal()
+            setGlobalState('NFTDetailsModal', 'scale-0')
+        },
+        onError(error){
+            setAlert(`Unable to Buy NFT ${error.message}`, 'red')
+            console.log(`This is the error ${error}`)
+            cancelModal()
+            setGlobalState('NFTDetailsModal', 'scale-0')
+        }
+    })
 
   return (
     <div className={`fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-50 transform transition-transform duration-300 ${NFTDetails}`}>
@@ -41,7 +64,7 @@ const NFTDetails = () => {
                 </div>
                 <div className='flex justify-center items-center rounded-xl mt-5'>
                     <div className='shrink-0 rounded-xl overflow-hidden h-40 w-40'>
-                        <Image className='h-full w-full object-cover cursor-pointer' width={1000} height={1000} src={nft?.metadataURI} alt={nft?.title}/>
+                        <Image className='h-full w-full object-cover cursor-pointer' width={1000} height={1000} src='/artwork_1.png' alt={nft?.title}/>
                     </div>
                 </div>
                 <div className='flex flex-col justify-start rounded-xl mt-5'>
@@ -66,7 +89,7 @@ const NFTDetails = () => {
                         <button onClick={onChangePrice} className='flex justify-center items-center w-full shadow-lg shadow-black text-white mt-5 font-bold bg-[#28043d] hover:bg-[#19012c] rounded-full p-2'>Update NFT Price</button>
                     ) : (
                         <div className='flex justify-between items-center space-x-2'>
-                        <button className='flex justify-center items-center w-full shadow-lg shadow-black text-white mt-5 font-bold bg-[#28043d] hover:bg-[#19012c] rounded-full p-2'>Buy NFT</button>
+                        <button onClick={()=> buyNFT?.()} className='flex justify-center items-center w-full shadow-lg shadow-black text-white mt-5 font-bold bg-[#28043d] hover:bg-[#19012c] rounded-full p-2'>Buy NFT</button>
                         <button onClick={()=>setGlobalState('reactionModal', 'scale-100')} className='flex justify-center items-center w-50 shadow-lg shadow-black text-white mt-5 font-bold bg-[#28043d] hover:bg-[#19012c]] rounded-full p-2'><MdOutlineAddReaction /></button>
                     </div>
                     )

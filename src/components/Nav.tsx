@@ -29,8 +29,10 @@ const Nav = () => {
             <li className='mx-4 cursor-pointer'>Profile</li>
             
         </ul>
-        
-          <Web3Button />  
+        <>
+        <Web3Button />  
+        </>
+          
         
     </div>
   )
