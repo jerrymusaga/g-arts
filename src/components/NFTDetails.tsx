@@ -80,7 +80,7 @@ const NFTDetails = () => {
                         </div>
                         <div className='flex flex-col text-white'>
                             <small className='text-xs'>Current Price</small>
-                            <p className='text-sm font-bold'>{formatEther(nft?.cost)} XDAI</p>
+                            <p className='text-sm font-bold'>{(nft?.cost)} XDAI</p>
                         </div>
                     </div>
                 </div>
