@@ -6,6 +6,9 @@ Publish Your NFTs on G-Arts and feel a sense of value through your work.
 ## Video Demo
 [G-art feature video demo](https://www.loom.com/share/51484480237944799f56505c1ea8d7de)
 
+## Pitch Deck
+[Pitch deck](https://infograph.venngage.com/ps/PJM8uuTClrc/g-arts-pitch)
+
 ## Contract Address
 [Contract Address Link](https://gnosis-chiado.blockscout.com/address/0x10fc9639e5052092Ae224b1a2867b0259D22DF45)
 
