@@ -1,5 +1,6 @@
 ## G-Arts
-G-Arts is an NFT marketplace which is built on the Gnosis protocol due to its low cost and fast transactions. In G-Arts, artists tend to upload or rather mint their NFTs which get stored on NFT.storage. Upon minting, the NFTs gets listed based on the price the artist puts on it. Other artists or users can buy that artwork. But incase they can't afford to buy it, they can decide to reward the owner of that artwork with XDAI tokens, by appreciating that artwork through reactions upon reacting with emojis. Even if a user does not want to buy that NFT but feels like rewarding the artist of that artwork, it's possible through interacting with emojis based on how that user feels about that artwork.
+G-Arts is an NFT marketplace that is built on the Gnosis protocol due to its low cost and fast transactions. In G-Arts, artists can upload or, rather, mint their NFTs, which get stored on NFT.storage. Upon minting, the NFTs get listed based on the price the artist puts on them. Other artists or users can buy that artwork. But in case they can't afford to buy it, they can decide to reward the owner of that artwork with XDAI tokens, by appreciating that artwork through reactions upon reacting with emojis. Even if a user does not want to buy that NFT but feels like rewarding the artist of that artwork, it's possible through interacting with emojis based on how that user feels about that artwork.
+
 Publish Your NFTs on G-Arts and feel a sense of value through your work.
 
 ## Video Demo
@@ -50,8 +51,6 @@ This is an original work by our team. I build on top of the following tooling:
 - Deploy to Gnosis mainnet network
 - Improve the storage of artworks
 
-
-
 ## Run project locally
 For Next.js
 - Need to have node installed
@@ -59,9 +58,10 @@ For Next.js
 - `cd g-arts`
 - `yarn`
 - `yarn run dev`
+  
 For smart contract
 - `cd smart-contract`
-- `yarn'
+- `yarn`
 - to deploy smart contract `yarn hardhat run --network chiado ./scripts/deploy.ts`
 - replace the contract address in the files the wagmi react hooks get called at the component section in the frontend
 - create an env file where you will store your NFT.stroage API. You will get it at [NFT.storage](https://nft.storage/)
